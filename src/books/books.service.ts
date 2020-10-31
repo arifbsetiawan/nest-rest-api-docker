@@ -44,7 +44,7 @@ export class BooksService {
         address: book.address,
       }
     };
-    return await this.bookModel.findByIdAndUpdate(id, data);
+    return await this.bookModel.findByIdAndUpdate(id, data, { new: true });
   }
 
   async delete(id: string): Promise<Book>
