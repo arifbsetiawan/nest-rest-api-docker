@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BookModule } from './books/books.module';
+import app from './config/app';
 import database from './config/database';
 
 @Module({
@@ -12,6 +13,7 @@ import database from './config/database';
       isGlobal: true,
       ignoreEnvFile: false,
       load: [
+        app,
         database
       ]
     }),
