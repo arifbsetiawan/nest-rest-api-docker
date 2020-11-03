@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  app:
+    container_name: nest-rest-api-docker
+    restart: unless-stopped
+    build:
+      context: .
+      target: production
+    image: nest-rest-api-docker
+    working_dir: /usr/src/app
+    volumes: 
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    environment: 
+      - PORT=5000
+      - MONGO_URI=YOUR_MONGO_URI
+    ports: 
+      - 5000:5000
+    tty: true

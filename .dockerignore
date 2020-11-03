@@ -1,0 +1,22 @@
+.git
+.github
+**/.gitignore
+.vscode
+coverage
+azure-pipelines.yml
+*.md
+.prettierrc
+README.md
+
+# Secrets
+.env
+.env.example
+
+# Node Files
+node_modules
+npm-debug.log
+npm-debug.log.*
+
+# Source files
+src
+test
