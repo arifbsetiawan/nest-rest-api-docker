@@ -1,14 +1,12 @@
-FROM node:12-alpine as builder
+FROM node:12 as builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+COPY package*.json tsconfig*.json ./
 
-RUN npm ci
+RUN npm ci && npm run build
 
 COPY . .
-
-RUN npm run build
 
 FROM node:12-alpine as production
 
@@ -16,14 +14,20 @@ RUN apk update && apk add bash
 
 RUN npm install pm2 -g
 
-WORKDIR /usr/src/app
+RUN mkdir /home/node/app/ && chown -R node:node /home/node/app
 
-COPY package*.json ./
+ENV NPM_CONFIG_PREFIX=/home/node/.npm-global
+
+WORKDIR /home/node/app
+
+COPY --chown=node:node package*.json ./
+
+USER node
 
 RUN npm ci --only=production && npm cache clean --force --loglevel=error
 
-COPY . .
+COPY --chown=node:node . .
 
-COPY --from=builder /usr/src/app/dist ./dist
+COPY --from=builder /app/dist ./dist
 
-CMD ["pm2-runtime", "dist/main", "-i", "-1"]
+CMD ["pm2-runtime", "./dist/main.js", "-i", "-1"]

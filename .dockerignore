@@ -7,6 +7,9 @@ azure-pipelines.yml
 *.md
 .prettierrc
 README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
 
 # Secrets
 .env
